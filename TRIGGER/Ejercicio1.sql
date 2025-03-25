@@ -52,6 +52,18 @@ DELIMITER $$
     END $$
 DELIMITER;
 
+-- PRUEBA 1.
+
+INSERT INTO empleados (nombre, posicion, fecha_contratacion) 
+VALUES ('Juan López', 'Desarrollador', '2021-09-20');
+
+INSERT INTO salarios (empleado_id, salario) 
+VALUES (3, 4500.00);
+
+SELECT * FROM auditoria_salarios;
+
+------------------------------------------------------------------
+
 -- Ejercicio 2. TRIGGER encargado de validar si el salario nuevo es mayor al anterior del empleado
 
 DELIMITER $$
@@ -67,6 +79,26 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+-- PRUEBA 2.
+
+-- Funcional
+UPDATE salarios 
+SET salario = 6000.00 
+WHERE empleado_id = 1;
+
+-- NO funcional
+
+UPDATE salarios 
+SET salario = 2000.00 
+WHERE empleado_id = 1;
+
+-- 
+
+SELECT * FROM salarios WHERE empleado_id = 1;
+
+--
+
 
 -- Ejercicio 3. El anterior TIGGER valido, de cumplirse, se actualizara el nuevo salario
 
@@ -85,6 +117,15 @@ END $$
 
 DELIMITER ;
 
+-- PRUEBA 3.
+
+UPDATE salarios 
+SET salario = 7000.00 
+WHERE empleado_id = 1;
+
+SELECT * FROM auditoria_salarios;
+
+
 -- Ejercicio 4. Este TIGGER esta encargado de eliminar un salario y registrar el cambio en "auditoria_salario"
 
 DELIMITER $$
@@ -100,6 +141,13 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+-- PRUEBA 4.
+
+DELETE FROM salarios 
+WHERE empleado_id = 2;
+
+SELECT * FROM auditoria_salarios;
 
 
 
